@@ -5,6 +5,7 @@
 
 /* Cac ham Init tu bat clock cua port. */
 void M_GPIO_InitInputPullUp(volatile GPIO_TypeDef *gpio, uint8_t pin);
+void M_GPIO_InitInputPullDown(volatile GPIO_TypeDef *gpio, uint8_t pin);
 void M_GPIO_InitInputFloating(volatile GPIO_TypeDef *gpio, uint8_t pin);
 
 /* Dat muc output truoc khi chuyen mode, chan khong bi nhay muc luc khoi tao. */

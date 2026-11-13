@@ -14,11 +14,35 @@
 #define BTN_DEC_PORT        GPIOB
 #define BTN_DEC_PIN         GPIO_PIN_1   // -36 do, dung o 0
 
+// ===================== NUT TOC DO BANG CHUYEN (tich cuc muc cao, pull-down trong, chan chiu duoc 5V) =====================
+#define BTN_CONV_ACTIVE_LEVEL 1U         // muc tin hieu khi nhan
+
+#define BTN_CONV_UP_PORT    GPIOB
+#define BTN_CONV_UP_PIN     GPIO_PIN_14  // tang toc do 1 buoc
+
+#define BTN_CONV_DOWN_PORT  GPIOB
+#define BTN_CONV_DOWN_PIN   GPIO_PIN_15  // giam toc do 1 buoc
+
 // ===================== SERVO MG996R (nguon 5-6V rieng, chung GND) =====================
 #define SERVO_PWM_PORT      GPIOB
 #define SERVO_PWM_PIN       GPIO_PIN_9
 #define SERVO_PWM_TIMER     TIM4
 #define SERVO_PWM_CHANNEL   TIM_CH4
+
+// ===================== DONG CO BANG CHUYEN, L298 kenh A (nguon motor rieng, chung GND) =====================
+// Ngo vao L298 nhan muc cao tu 2.3V nen noi thang 3.3V duoc.
+// Nen gan tro 10k keo ENA xuong GND de motor khong chay luc reset hoac nap, khi chan MCU con la input.
+#define MOTOR_ENA_PORT      GPIOA
+#define MOTOR_ENA_PIN       GPIO_PIN_0   // PWM toc do, phai thao jumper ENA tren module
+#define MOTOR_ENA_TIMER     TIM2         // TIM4 dang chay 50 Hz cho servo nen dung timer rieng
+#define MOTOR_ENA_CHANNEL   TIM_CH1
+
+// ENA cao: IN1 IN2 = 10 chay toi, 01 chay lui, 00 hoac 11 phanh. ENA thap: motor tu troi.
+#define MOTOR_IN1_PORT      GPIOB
+#define MOTOR_IN1_PIN       GPIO_PIN_12
+
+#define MOTOR_IN2_PORT      GPIOB
+#define MOTOR_IN2_PIN       GPIO_PIN_13
 
 // ===================== CHIEU CAO (active low, pull-up trong, tin hieu toi da 3.3V) =====================
 #define HEIGHT_ACTIVE_LEVEL 0U           // muc tin hieu khi co vat

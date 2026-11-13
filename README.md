@@ -12,7 +12,11 @@ Code viết thẳng trên register, không dùng HAL, chạy trên FreeRTOS V11.
 | Nút +36° | PA2 | Từ 180° quay về 0° |
 | Nút lên 180° | PA3 | |
 | Nút −36° | PB1 | Dừng ở 0° |
+| Nút tăng tốc băng chuyền | PB14 | Tích cực mức cao, dùng pull-down trong, chân chịu được 5 V |
+| Nút giảm tốc băng chuyền | PB15 | Như PB14 |
 | Servo MG996R | PB9 (TIM4_CH4) | Nguồn riêng 5–6 V, nối chung GND với board |
+| L298 ENA | PA0 (TIM2_CH1) | PWM 1 kHz. Tháo jumper ENA, nên gắn 10k kéo xuống GND |
+| L298 IN1 / IN2 | PB12 / PB13 | Cố định `1` / `0`. Motor nối OUT1, OUT2. GND L298 nối chung với board |
 | Cảm biến vật cản dưới | PA4 | Có vật. Tích cực mức thấp, tín hiệu tối đa 3,3 V |
 | Cảm biến vật cản trên | PA5 | Vật cao. Tích cực mức thấp, tín hiệu tối đa 3,3 V |
 | TCS34725 SCL / SDA | PB6 / PB7 | I2C1, 100 kHz, cần điện trở kéo lên 3,3 V |
@@ -46,7 +50,7 @@ LineColor/
 ├── config.h               # toàn bộ số cần chỉnh: gain, cụm màu, thời gian, góc servo, task
 ├── color_log.gdb          # script đọc giá trị cảm biến qua ST-Link
 ├── application/
-│   ├── app/               # vòng lặp các task FreeRTOS: a_button, a_servo, a_height, a_color
+│   ├── app/               # vòng lặp các task FreeRTOS: a_button, a_servo, a_height, a_color, a_motor
 │   └── state_driven/      # FSM và logic phân loại, không gọi register hay FreeRTOS
 ├── middle/                # API dùng chung: clock, thời gian, GPIO, EXTI, PWM, I2C, TCS34725
 ├── hardware/              # register, bảng chân, startup, linker
@@ -62,6 +66,7 @@ Chiều phụ thuộc là `application` gọi `middle`, `middle` gọi `hardware
 | `a_servo` | 3 | Có lệnh trong queue | Xuất xung PWM đến vị trí được yêu cầu |
 | `a_button` | 2 | Mỗi 5 ms | Quét nút, chống dội 20 ms, gửi lệnh servo |
 | `a_height` | 2 | Mỗi 5 ms | Đọc PA4, PA5, lọc 20 ms |
+| `a_motor` | 2 | Mỗi 5 ms | Quét 2 nút tốc độ, chống dội 20 ms, đặt PWM motor băng chuyền |
 | `a_color` | 1 | Ngắt PB5, tối đa chờ 100 ms | Đọc cảm biến, phân loại, quyết định ô |
 
 Xử lý một vật diễn ra theo thứ tự:
@@ -83,6 +88,8 @@ Vị trí ô theo màu và chiều cao (vật cao là khi PA5 báo):
 | Xanh dương | 144° | 180° |
 
 Bốn nút bấm vẫn hoạt động song song, nút và màu gửi chung một queue nên lệnh đến sau sẽ được thực hiện.
+
+Băng chuyền chạy ngay khi cấp nguồn với duty 50%. Mỗi lần bấm PB14 tăng 10%, bấm PB15 giảm 10%, dừng ở 20% và 80%. Giữ nút không lặp lại, bấm cả hai cùng lúc thì bỏ qua. Các số này nằm ở `CFG_MOTOR_DUTY_*` trong `config.h`. Băng chuyền chạy ngược thì đảo 2 dây motor ở OUT1, OUT2.
 
 ## Calib màu
 

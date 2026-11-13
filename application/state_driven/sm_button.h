@@ -33,6 +33,15 @@ typedef struct
     SmButton_Item items[SM_BUTTON_COUNT];
 } SmButton;
 
+/* Chong doi cho mot mang nut bat ky, nut i ung voi bit i trong down_mask */
+void sm_button_items_init(SmButton_Item *items, uint8_t count);
+
+/*
+ * Tra ve bit cua nut vua duoc nhan, 0 neu khong co lan nhan moi.
+ * Moi lan nhan chi bao 1 lan, giu nut khong lap lai. Bam nhieu nut cung luc thi bo qua.
+ */
+uint8_t sm_button_scan(SmButton_Item *items, uint8_t count, uint8_t down_mask, uint32_t now_ms);
+
 void sm_button_init(SmButton *sm);
 
 /*

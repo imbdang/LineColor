@@ -12,6 +12,10 @@ void app_run(void);
 void a_servo_init(void);
 void a_servo_post(SmServo_Event event);
 
+/* ============ a_motor.c ============ */
+/* Motor bang chuyen chay mot chieu, toc do chinh bang 2 nut BTN_CONV_UP, BTN_CONV_DOWN */
+void a_motor_init(void);
+
 /* ============ a_button.c ============ */
 void a_button_init(void);
 

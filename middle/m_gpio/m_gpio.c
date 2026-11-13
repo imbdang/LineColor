@@ -15,6 +15,12 @@ void M_GPIO_InitInputPullUp(volatile GPIO_TypeDef *gpio, uint8_t pin)
     GPIO_ConfigInputPullUp(gpio, pin);
 }
 
+void M_GPIO_InitInputPullDown(volatile GPIO_TypeDef *gpio, uint8_t pin)
+{
+    m_gpio_enable_clock(gpio);
+    GPIO_ConfigInputPullDown(gpio, pin);
+}
+
 void M_GPIO_InitInputFloating(volatile GPIO_TypeDef *gpio, uint8_t pin)
 {
     m_gpio_enable_clock(gpio);

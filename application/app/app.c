@@ -30,6 +30,7 @@ void app_run(void)
 {
     M_CLOCK_Set72MHz_HSE_PLL9();
 
+    a_motor_init(); /* som nhat co the de keo ENA xuong thap */
     a_servo_init();
     a_button_init();
     a_height_init();

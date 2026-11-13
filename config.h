@@ -5,6 +5,7 @@
 #define CFG_CORE_CLK_HZ (72000000U)
 #define CFG_PCLK1_MHZ (36U)
 #define CFG_TIM4_CLK_HZ (72000000U) /* APB1 chia 2 nen timer clock = PCLK1 x 2 */
+#define CFG_TIM2_CLK_HZ (72000000U) /* cung APB1 voi TIM4 */
 
 /* ============================== I2C ======================================== */
 #define CFG_I2C_SPEED_KHZ (100U)
@@ -97,6 +98,16 @@
  * 0 va 180 da xac nhan tren servo that, 4 vi tri giua la uoc tinh can do lai. */
 #define CFG_SERVO_PULSE_US {500U, 869U, 1256U, 1701U, 2077U, 2446U}
 
+/* ============================== Dong co bang chuyen (L298) ================= */
+/* PWM chan ENA. Counter chay 1 MHz nen 1000 us = 1 kHz, chia duoc 1000 muc. */
+#define CFG_MOTOR_PWM_PERIOD_US (1000U)
+
+/* Duty luc khoi dong. Moi lan bam nut tang hoac giam 1 buoc, dung o MIN va MAX. */
+#define CFG_MOTOR_DUTY_INIT_PCT (50U)
+#define CFG_MOTOR_DUTY_MIN_PCT (20U)
+#define CFG_MOTOR_DUTY_MAX_PCT (80U)
+#define CFG_MOTOR_DUTY_STEP_PCT (10U)
+
 /* ============================== Phan loai ================================== */
 /* Mau va chieu cao phai giu nguyen bay nhieu ms moi gui lenh servo, ke ca khi cac vat di lien nhau.
  * Tranh quay theo mau thoang qua o mep vat. Giam so nay neu can phan ung nhanh hon. */
@@ -121,11 +132,13 @@
 #define CFG_TASK_STACK_BUTTON (128U)
 #define CFG_TASK_STACK_HEIGHT (128U)
 #define CFG_TASK_STACK_COLOR (256U)
+#define CFG_TASK_STACK_MOTOR (128U)
 
 #define CFG_TASK_PRIO_SERVO (3U)
 #define CFG_TASK_PRIO_BUTTON (2U)
 #define CFG_TASK_PRIO_HEIGHT (2U)
 #define CFG_TASK_PRIO_COLOR (1U)
+#define CFG_TASK_PRIO_MOTOR (2U)
 
 /* Thang 0..7, phai >= 3 (configMAX_SYSCALL_INTERRUPT_PRIORITY) de ISR goi duoc FreeRTOS API */
 #define CFG_IRQ_PRIO_COLOR_INT (4U)

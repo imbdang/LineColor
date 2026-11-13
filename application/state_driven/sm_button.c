@@ -54,23 +54,23 @@ static uint8_t sm_button_item_step(SmButton_Item *item, uint8_t is_down, uint32_
     return pressed;
 }
 
-void sm_button_init(SmButton *sm)
+void sm_button_items_init(SmButton_Item *items, uint8_t count)
 {
-    for (uint8_t i = 0U; i < (uint8_t)SM_BUTTON_COUNT; i++)
+    for (uint8_t i = 0U; i < count; i++)
     {
-        sm->items[i].state = SM_BUTTON_RELEASED;
-        sm->items[i].since_ms = 0U;
+        items[i].state = SM_BUTTON_RELEASED;
+        items[i].since_ms = 0U;
     }
 }
 
-SmServo_Event sm_button_update(SmButton *sm, uint8_t down_mask, uint32_t now_ms)
+uint8_t sm_button_scan(SmButton_Item *items, uint8_t count, uint8_t down_mask, uint32_t now_ms)
 {
     uint8_t press_events = 0U;
     uint8_t held = 0U;
 
-    for (uint8_t i = 0U; i < (uint8_t)SM_BUTTON_COUNT; i++)
+    for (uint8_t i = 0U; i < count; i++)
     {
-        SmButton_Item *item = &sm->items[i];
+        SmButton_Item *item = &items[i];
 
         if (sm_button_item_step(item, (uint8_t)((down_mask >> i) & 1U), now_ms))
         {
@@ -83,12 +83,22 @@ SmServo_Event sm_button_update(SmButton *sm, uint8_t down_mask, uint32_t now_ms)
     }
 
     /* Bo qua to hop phim. Tha mot nut khac khong duoc tinh la nhan moi. */
-    if ((press_events == 0U) || (press_events != held))
+    if ((press_events != held) || ((press_events & (uint8_t)(press_events - 1U)) != 0U))
     {
-        return SM_SERVO_EV_NONE;
+        return 0U;
     }
 
-    switch (press_events)
+    return press_events;
+}
+
+void sm_button_init(SmButton *sm)
+{
+    sm_button_items_init(sm->items, (uint8_t)SM_BUTTON_COUNT);
+}
+
+SmServo_Event sm_button_update(SmButton *sm, uint8_t down_mask, uint32_t now_ms)
+{
+    switch (sm_button_scan(sm->items, (uint8_t)SM_BUTTON_COUNT, down_mask, now_ms))
     {
     case (1U << SM_BUTTON_ZERO):
         return SM_SERVO_EV_ZERO;
