@@ -74,8 +74,8 @@ void a_motor_init(void)
     M_GPIO_InitOutputPP(MOTOR_IN1_PORT, MOTOR_IN1_PIN, 1U);
     M_GPIO_InitOutputPP(MOTOR_IN2_PORT, MOTOR_IN2_PIN, 0U);
 
-    M_GPIO_InitInputPullDown(BTN_CONV_UP_PORT, BTN_CONV_UP_PIN);
-    M_GPIO_InitInputPullDown(BTN_CONV_DOWN_PORT, BTN_CONV_DOWN_PIN);
+    M_GPIO_InitInputPullUp(BTN_CONV_UP_PORT, BTN_CONV_UP_PIN);
+    M_GPIO_InitInputPullUp(BTN_CONV_DOWN_PORT, BTN_CONV_DOWN_PIN);
 
     (void)xTaskCreateStatic(a_motor_task, "motor", CFG_TASK_STACK_MOTOR, NULL,
                             CFG_TASK_PRIO_MOTOR, s_stack, &s_tcb);

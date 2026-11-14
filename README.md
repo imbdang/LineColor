@@ -12,7 +12,7 @@ Code viết thẳng trên register, không dùng HAL, chạy trên FreeRTOS V11.
 | Nút +36° | PA2 | Từ 180° quay về 0° |
 | Nút lên 180° | PA3 | |
 | Nút −36° | PB1 | Dừng ở 0° |
-| Nút tăng tốc băng chuyền | PB14 | Tích cực mức cao, dùng pull-down trong, chân chịu được 5 V |
+| Nút tăng tốc băng chuyền | PB14 | Nút thường hở nối GND, dùng pull-up trong |
 | Nút giảm tốc băng chuyền | PB15 | Như PB14 |
 | Servo MG996R | PB9 (TIM4_CH4) | Nguồn riêng 5–6 V, nối chung GND với board |
 | L298 ENA | PA0 (TIM2_CH1) | PWM 1 kHz. Tháo jumper ENA, nên gắn 10k kéo xuống GND |

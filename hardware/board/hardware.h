@@ -14,8 +14,8 @@
 #define BTN_DEC_PORT        GPIOB
 #define BTN_DEC_PIN         GPIO_PIN_1   // -36 do, dung o 0
 
-// ===================== NUT TOC DO BANG CHUYEN (tich cuc muc cao, pull-down trong, chan chiu duoc 5V) =====================
-#define BTN_CONV_ACTIVE_LEVEL 1U         // muc tin hieu khi nhan
+// ===================== NUT TOC DO BANG CHUYEN (thuong ho, noi GND, pull-up trong) =====================
+#define BTN_CONV_ACTIVE_LEVEL 0U         // muc tin hieu khi nhan
 
 #define BTN_CONV_UP_PORT    GPIOB
 #define BTN_CONV_UP_PIN     GPIO_PIN_14  // tang toc do 1 buoc
